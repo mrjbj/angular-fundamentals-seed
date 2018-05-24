@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core'
+import { Component, OnChanges, Input, Output, EventEmitter } from '@angular/core'
 import { Passenger } from '../../models/passenger.interface';
 
 @Component({
@@ -34,7 +34,9 @@ import { Passenger } from '../../models/passenger.interface';
   `  
 })
 
-export class PassengerDetailComponent {
+
+// OnChanges keeps events from firing until done button clicked.    
+export class PassengerDetailComponent implements OnChanges {
     // PROPERTIES
     editing: boolean = false;
     
@@ -52,6 +54,16 @@ export class PassengerDetailComponent {
 
     // FUNCTIONS
     constructor() { }
+    // fires whenever angular detects changes to a property tagged as @Input. 
+    // Passenger is passed down from dashboard component and held in 
+    // the local 'details' variable. Because passed by reference, any changes made
+    // here in this component will be reflected in the parent immediately.  By 
+    // intercepting the change 
+    ngOnChanges(changes) {
+        if (changes.detail) {
+            this.detail = Object.assign({}, changes.detail.currentValue);
+        }
+    }
 
     onNameChange(value: string) {
         this.detail.fullname = value; 
