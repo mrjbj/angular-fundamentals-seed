@@ -57,8 +57,11 @@ export class PassengerDetailComponent implements OnChanges {
     // fires whenever angular detects changes to a property tagged as @Input. 
     // Passenger is passed down from dashboard component and held in 
     // the local 'details' variable. Because passed by reference, any changes made
-    // here in this component will be reflected in the parent immediately.  By 
-    // intercepting the change 
+    // here in this component will be reflected in the parent immediately.  To avoid this
+    // (and update parent only after 'done' button pressed, we make a new object via 
+    // Object.assign({}) and clone the currentValue object into it, thus having a local
+    // copy now to work on.  Once 'done' hit, the emit(detail) passes this object back
+    // up to parent for it to update local storage at that time. 
     ngOnChanges(changes) {
         if (changes.detail) {
             this.detail = Object.assign({}, changes.detail.currentValue);

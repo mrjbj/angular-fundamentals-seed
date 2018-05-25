@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Passenger} from '../../models/passenger.interface'
+import { Passenger } from '../../models/passenger.interface';
+import { PassengerDashboardService } from '../../passenger-dashboard.service';
 
 @Component({
     selector: 'passenger-dashboard',
@@ -34,40 +35,15 @@ import { Passenger} from '../../models/passenger.interface'
 
 export class PassengerDashboardComponent implements OnInit{
     passengers: Passenger[];
-    constructor() { };
+    constructor(private passengerService: PassengerDashboardService) {
+        // the 'private' keyword essentially creats a local propertly as if
+        // this.passengerService = passengerService 
+        // had been typed.
+     };
     ngOnInit() {
         console.log('ngOnInit called');
-        this.passengers = [{
-            id: 1,
-            fullname: 'Stephen',
-            checkedIn: true,
-            checkInDate: 149074200000,
-            children: null
-        }, {
-            id: 2,
-            fullname: 'Rose',
-            checkedIn: false,
-            checkInDate: null,
-            children: [{ name: 'Ted', age: 12 }, { name: 'Chloe', age: 7 }]
-        }, {
-            id: 3,
-            fullname: 'James',
-            checkedIn: true,
-            checkInDate: 147516654000,
-            children: null
-        }, {
-            id: 4,
-            fullname: 'Louise',
-            checkedIn: true,
-            checkInDate: null,
-            children: [{ name: 'Jason', age: 54 }]
-        }, {
-            id: 5,
-            fullname: 'Tina',
-            checkedIn: false,
-            checkInDate: null,
-            children: null
-        }];
+        this.passengers = this.passengerService.getPassengers();
+        
     }
     handleEdit(event: Passenger) {
         this.passengers = this.passengers.map((passenger: Passenger) => {
