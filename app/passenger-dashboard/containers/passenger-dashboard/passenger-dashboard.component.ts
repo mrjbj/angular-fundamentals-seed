@@ -32,30 +32,47 @@ import { PassengerDashboardService } from '../../passenger-dashboard.service';
     `
 })
    
-
-export class PassengerDashboardComponent implements OnInit{
+// why is @Injectable not required here? 
+export class PassengerDashboardComponent implements OnInit {
     passengers: Passenger[];
     constructor(private passengerService: PassengerDashboardService) {
         // the 'private' keyword essentially creats a local propertly as if
         // this.passengerService = passengerService 
         // had been typed.
-     };
+    };
     ngOnInit() {
-        console.log('ngOnInit called');
-        this.passengers = this.passengerService.getPassengers();
-        
+        this.passengerService
+            .getPassengers()
+            .subscribe((data: Passenger[]) => this.passengers = data);
     }
     handleEdit(event: Passenger) {
-        this.passengers = this.passengers.map((passenger: Passenger) => {
-            if (passenger.id === event.id) {
-                // we are on the passenger that event says might have been edited
-                passenger = Object.assign({}, passenger, event);
-            }
-            return passenger;
-        })
+        this.passengerService
+            .updatePassenger(event)
+            .subscribe((data: Passenger) => {
+                this.passengers =this.passengers.map((passenger: Passenger) => {
+                    if (passenger.id === event.id) {
+                        passenger = Object.assign({}, passenger, event);
+                    }
+                return passenger;
+                });
+            });
     }
     handleRemove(event: Passenger) {
-        this.passengers = this.passengers.filter(
-            (passenger: Passenger) => passenger.id !== event.id);
+        this.passengerService
+            .removePassenger(event)
+            .subscribe((data: Passenger) => {
+                this.passengers = this.passengers.filter((passenger: Passenger) => {
+                    return passenger.id !== event.id;
+                });
+            });
+        // {
+        //     "id": 3,
+        //         "fullname": "Samantha Powers",
+        //             "checkedIn": true,
+        //                 "checkInDate": 1491606000000,
+        //                     "children": null
+        // },
+        
+        
     }
 }
