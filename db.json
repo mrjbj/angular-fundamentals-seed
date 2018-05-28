@@ -1,11 +1,11 @@
 {
   "passengers": [
     {
-      "id": 1,
       "fullname": "Jason Jones",
+      "id": 1,
       "checkedIn": true,
-      "checkInDate": 149074200000,
-      "baggage": "" 
+      "baggage": "hand-only",
+      "checkInDate": 149074200000
     },
     {
       "id": 2,
