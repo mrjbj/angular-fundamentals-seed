@@ -41,6 +41,7 @@ export class PassengerDashboardComponent implements OnInit {
         // had been typed.
     };
     ngOnInit() {
+        // TODO: QUESTION: how to add error handling via second parameter to 'subscribe'
         this.passengerService
             .getPassengers()
             .subscribe((data: Passenger[]) => this.passengers = data);
