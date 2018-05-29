@@ -1,7 +1,11 @@
+// 1. exports [] not needed for PassengerViewer or PassengerDashboard because the components
+// are being marshalled into the page via the routing constructs. 
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, Routes } from '@angular/router';
 
 //containers (stateful, containing data)
 import { PassengerDashboardComponent } from './containers/passenger-dashboard/passenger-dashboard.component';
@@ -14,6 +18,17 @@ import { PassengerFormComponent } from './components/passenger-form/passenger-fo
 
 //service 
 import { PassengerDashboardService } from './passenger-dashboard.service';
+
+
+const routes: Routes = [
+    {
+        path: 'passengers',
+        children: [
+            { path: '', component: PassengerDashboardComponent }, 
+            { path: ':id', component: PassengerViewerComponent }
+        ]
+    }
+];
 
 @NgModule({
     declarations: [
@@ -28,10 +43,8 @@ import { PassengerDashboardService } from './passenger-dashboard.service';
     imports: [
         CommonModule,
         HttpModule, 
-        FormsModule
-    ], 
-    exports: [
-        PassengerViewerComponent
+        FormsModule, 
+        RouterModule.forChild(routes)  //this is a child router beneath main app module
     ], 
     providers: [
         PassengerDashboardService

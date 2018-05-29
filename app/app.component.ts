@@ -41,13 +41,13 @@ export class AppComponent {
       exact: true
     }, 
     {
-      link: '/oops',
-      name: '404',
+      link: '/passengers',
+      name: 'Passengers',
       exact: false
     },
     {
-      link: '/passenger',
-      name: 'Passenger',
+      link: '/oops',
+      name: '404',
       exact: false
     }
   ]

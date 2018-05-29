@@ -22,17 +22,16 @@
       "baggage": ""
     },
     {
+      "fullname": "Deda",
       "id": 4,
-      "fullname": "Louise",
       "checkedIn": true,
-      "checkInDate": null,
-      "baggage": ""
+      "baggage": "",
+      "checkInDate": null
     },
     {
+      "fullname": "Baba",
       "id": 5,
-      "fullname": "Tina",
       "checkedIn": false,
-      "checkInDate": null,
       "baggage": ""
     }
   ]

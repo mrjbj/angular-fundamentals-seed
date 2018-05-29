@@ -27,6 +27,9 @@ import { Passenger } from '../../models/passenger.interface';
         <button (click)="onRemove()">
            Remove
         </button>
+        <button (click)="gotoPassenger()">
+           View
+        </button>
     </div>
   `  
 })
@@ -45,10 +48,13 @@ export class PassengerDetailComponent implements OnChanges {
     // class that has <passenger-detail> in its template will need to handle
     // the event via function defined int he parent class locally)
     @Output()
-    remove: EventEmitter<any> = new EventEmitter();   
+    remove: EventEmitter<Passenger> = new EventEmitter<Passenger>();   
     @Output()
-    edit: EventEmitter<any> = new EventEmitter();    
+    edit: EventEmitter<Passenger> = new EventEmitter<Passenger>();    
+    @Output()
+    view: EventEmitter<Passenger> = new EventEmitter<Passenger>();    
 
+    
     // FUNCTIONS
     constructor() { }
     // fires whenever angular detects changes to a property tagged as @Input. 
@@ -67,6 +73,9 @@ export class PassengerDetailComponent implements OnChanges {
 
     onNameChange(value: string) {
         this.detail.fullname = value; 
+    }
+    gotoPassenger() {
+        this.view.emit(this.detail);
     }
     toggleEdit() {
         if (this.editing) {

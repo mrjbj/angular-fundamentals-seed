@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Passenger } from '../../models/passenger.interface';
 import { PassengerDashboardService } from '../../passenger-dashboard.service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'passenger-dashboard',
@@ -25,6 +26,7 @@ import { PassengerDashboardService } from '../../passenger-dashboard.service';
          <passenger-detail
             *ngFor="let passenger of passengers;"
             [detail]="passenger"
+            (view) = "handleView($event)"
             (edit)="handleEdit($event)"
             (remove)="handleRemove($event)">
         </passenger-detail>       
@@ -35,7 +37,9 @@ import { PassengerDashboardService } from '../../passenger-dashboard.service';
 // why is @Injectable not required here? 
 export class PassengerDashboardComponent implements OnInit {
     passengers: Passenger[];
-    constructor(private passengerService: PassengerDashboardService) {
+    constructor(
+        private router: Router, 
+        private passengerService: PassengerDashboardService) {
         // the 'private' keyword essentially creats a local propertly as if
         // this.passengerService = passengerService 
         // had been typed.
@@ -66,14 +70,8 @@ export class PassengerDashboardComponent implements OnInit {
                     return passenger.id !== event.id;
                 });
             });
-        // {
-        //     "id": 3,
-        //         "fullname": "Samantha Powers",
-        //             "checkedIn": true,
-        //                 "checkInDate": 1491606000000,
-        //                     "children": null
-        // },
-        
-        
+    }
+    handleView(event: Passenger) {
+        this.router.navigate(['/passengers', event.id]);
     }
 }
